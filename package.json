@@ -1,0 +1,30 @@
+{
+  "name": "BadoUrfaSofrasi",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "native-base": "^2.4.2",
+    "react": "16.3.1",
+    "react-native": "0.55.3",
+    "react-native-easy-grid": "^0.1.17",
+    "react-native-material-bottom-navigation": "^0.9.0",
+    "react-native-storage": "^0.2.2",
+    "react-native-vector-icons": "^4.6.0",
+    "react-navigation": "^1.5.11"
+  },
+  "devDependencies": {
+    "babel-jest": "22.4.3",
+    "babel-preset-react-native": "4.0.0",
+    "eslint-config-rallycoding": "^3.2.0",
+    "jest": "22.4.3",
+    "react-test-renderer": "16.3.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
