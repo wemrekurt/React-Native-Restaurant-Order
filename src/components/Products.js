@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Modal,
   TextInput,
-  Image
+  Alert
 } from 'react-native';
 import { 
   Container, 
@@ -21,11 +21,16 @@ import {
   CardItem, 
   Left, 
   Right, 
-  Icon 
+  Icon,
+  Spinner,
+  Button as Btn
 } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { NavigationActions } from 'react-navigation';
 import axios from 'axios';
+import Image from 'react-native-image-progress';
+import * as Progress from 'react-native-progress';
+
 
 export default class Products extends React.Component {
   static navigationOptions = {
@@ -33,9 +38,11 @@ export default class Products extends React.Component {
   }
 
   state = { data: [], loading: true, category: {}, basketModal: false, tempItem: {isim: '', fotograf:'', fiyat: 0.0}, emptyItem: {isim: '', fotograf:'', fiyat: 0.0} };
+  
 
   getItems() {
     let uri = 'http://api.bado.com.tr/categories/'+ this.props.navigation.state.params.cat_id + '.json';
+    console.log(uri);
     axios.get(uri)
       .then(
         response => {
@@ -64,13 +71,21 @@ export default class Products extends React.Component {
   }
 
   saveBasket(basket, item){
-    basket[item.id] = {item: item, size: this.state.text}
+    basket[item.id] = {item: item, size: this.state.text, price: item.fiyat * this.state.text}
     storage.save({
       key: 'basket',
       data: basket
     });
     this.setState({ basketModal: false });
-    alsert("Ürün sepete Eklendi");
+    Alert.alert(
+      'İşlem Tamam',
+      'Ürün sepete eklendi.',
+      [
+        {text: 'Sepete Git', onPress: () => this.props.navigation.navigate('Basket')},
+        {text: 'Tamam'},
+      ],
+      { cancelable: false }
+    )    
   }
 
   componentDidMount(){
@@ -78,14 +93,14 @@ export default class Products extends React.Component {
   }
 
   showAddBasket(visible, item){
-    this.setState({ basketModal: visible, tempItem: item });
+    this.setState({ text: 0, basketModal: visible, tempItem: item });
   }
 
   render() {
     if (this.state.loading) {
       return (
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ color: '#ffffff', fontSize: 21 }}>Loading</Text>
+          <View style={styles.container}>
+            <Spinner color='red' />
           </View>
       );
     }
@@ -97,17 +112,14 @@ export default class Products extends React.Component {
             transparent={false}
             visible={this.state.basketModal}
             onRequestClose={() => {
-              alert('Dikkat! Ürün sepete eklenmedi.');
               this.showAddBasket(false, this.state.emptyItem);
             }}>
             <View style={{ marginTop: 32, padding: 20 }}>
               <View style={{flexDirection: "row", flex: 1}}>
                 <Image 
-                  onLoadStart={() => console.log('yukleme basladi')}
-                  onLoad={() => console.log('yukleniyor')}
-                  onLoadEnd={() => console.log('yukleme bitti')}
+                  indicator={Progress.Bar}
                   source={{ uri: 'https://www.bado.com.tr/content/'+ this.state.tempItem.fotograf +'.png' }} 
-                  style={{flex: 1, resizeMode: "stretch", width: null, height: 200}}
+                  style={{flex: 1, width: null, height: 200}}
                 />
               </View>
               <View style={{ marginTop: 230 }}>
@@ -127,7 +139,9 @@ export default class Products extends React.Component {
               </View>
             </View>
           </Modal>
-          <List dataArray={this.state.data}
+          <List
+            style={styles.list}
+            dataArray={this.state.data}
             renderRow={(item) =>
               <ListItem>
                 <Thumbnail square size={80} source={{ uri: 'https://www.bado.com.tr/content/small/'+ item.fotograf +'-300x300.png' }} />
@@ -138,9 +152,11 @@ export default class Products extends React.Component {
                       <Text note>{item.fiyat} TL</Text>
                     </Col>
                     <Col>
-                      <Button onPress={() => {
+                      <Btn danger block onPress={() => {
                           this.showAddBasket(true, item);
-                        }} title="Sepete Ekle"></Button>
+                        }}>
+                        <Text>Sepete Ekle</Text>  
+                      </Btn>
                     </Col>
                   </Grid>
                 </Body>
@@ -160,4 +176,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  list: {
+    backgroundColor: '#fff'
+  }
 });

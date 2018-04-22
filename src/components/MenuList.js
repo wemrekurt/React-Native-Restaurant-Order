@@ -6,25 +6,22 @@ import {
   AsyncStorage,
   TouchableOpacity
 } from 'react-native';
-import { Container, Content, List, ListItem, Thumbnail, Text, Body } from 'native-base';
+import { 
+  Container, 
+  Content, 
+  List, 
+  ListItem, 
+  Thumbnail, 
+  Text, 
+  Body,
+  Spinner
+} from 'native-base';
 
 import { NavigationActions } from 'react-navigation';
 import Storage from 'react-native-storage';
 import axios from 'axios';
 import Basket from './Basket';
 
-// storage nesnesi oluştur.
-let storage = new Storage({
-	size: 3000,
-	storageBackend: AsyncStorage,
-	defaultExpires: 1000 * 3600 * 1,
-	enableCache: true,
-	sync: {
-		// we'll talk about the details later.
-	}
-});
-// storage'ı global yap.
-global.storage = storage;
 
 export default class MenuList extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -68,15 +65,17 @@ export default class MenuList extends React.Component {
   render() {
     if (this.state.loading) {
       return (
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ color: '#ffffff', fontSize: 21 }}>Loading</Text>
+          <View style={styles.container}>
+            <Spinner color='red' />
           </View>
       );
     }
     return (
       <Container>
         <Content>
-          <List dataArray={this.state.data}
+          <List 
+            style={styles.list}
+            dataArray={this.state.data}
             renderRow={(item) =>
               <ListItem>
                 <TouchableOpacity style={{ flex: 1, justifyContent:'center' }} onPress={() => this.goProduct(item.id, item.name)}>
@@ -101,4 +100,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  list: {
+    backgroundColor: '#fff'
+  }
 });
