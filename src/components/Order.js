@@ -24,7 +24,14 @@ import axios from 'axios';
 export default class Order extends React.Component {
   static navigationOptions = {
     headerTitle: 'Sipariş Oluştur',
-    title: 'Menü'
+    title: 'Menü',
+    headerStyle: {
+      backgroundColor: 'tomato'
+    },
+    headerTitleStyle: {
+      color: 'white',
+      fontWeight: 'bold',
+    }
   }
   state = {isEmpty: true, basket: {}, total: 0, phone: "", name: "", address: "", customer_id: ""}
 

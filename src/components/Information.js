@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  View
+  View,
+  ImageBackground
 } from 'react-native';
 import { 
   Container, 
@@ -59,51 +60,56 @@ export default class Information extends React.Component {
 
   render() {
     return(
-      <Container>        
-        <Content>
-          <Form>
-            <Item>
-              <Label>İsim Soyisim</Label>
-              <Input 
-                onChangeText={(text) => this.setState({ name: text })} 
-                value={this.state.name}
-              />
-            </Item>
-            
-            <Item>
-              <Label>Telefon</Label>
-              <Input
-                placeholder="544xxxxxxx"
-                onChangeText={(text) => this.setState({ phone: text })} 
-                keyboardType='phone-pad'
-                maxLength={10}
-                value={this.state.phone}
-              />
-            </Item>
+      <ImageBackground
+        source={require('../images/background.jpg')}
+        style={styles.backgroundImage}
+        >
+        <Container>        
+          <Content>        
+            <Form style={{ backgroundColor: 'white', padding: 10, margin: 10, marginTop: 30, borderRadius: 4 }}>
+              <Item>
+                <Label>İsim Soyisim</Label>
+                <Input 
+                  onChangeText={(text) => this.setState({ name: text })} 
+                  value={this.state.name}
+                />
+              </Item>
+              
+              <Item>
+                <Label>Telefon</Label>
+                <Input
+                  placeholder="544xxxxxxx"
+                  onChangeText={(text) => this.setState({ phone: text })} 
+                  keyboardType='phone-pad'
+                  maxLength={10}
+                  value={this.state.phone}
+                />
+              </Item>
 
-            <Item>
-              <Icon active name='ios-home' />
-              <Input
-                onChangeText={(text) => this.setState({ address: text })} 
-                placeholder='Adres'
-                value={this.state.address}
-              />
-            </Item>
-            <Grid>
-              <Col>
-                <Button success style={{ margin: 5 }} onPress={() => { this.updateInformation() }} block>
-                  <Text>BİLGİLERİMİ GÜNCELLE</Text>
-                </Button>
-              </Col>
-              <Col>
-                <Button danger style={{ margin: 5 }} onPress={() => { this.clearData() }} block>
-                  <Text>BENİ UNUT</Text>
-                </Button>
-              </Col>
-            </Grid>
-          </Form>
-        </Content>
-      </Container>
+              <Item>
+                <Icon active name='ios-home' />
+                <Input
+                  onChangeText={(text) => this.setState({ address: text })} 
+                  placeholder='Adres'
+                  value={this.state.address}
+                />
+              </Item>
+              <Grid>
+                <Col>
+                  <Button success style={{ margin: 5 }} onPress={() => { this.updateInformation() }} block>
+                    <Text>GÜNCELLE</Text>
+                  </Button>
+                </Col>
+                <Col>
+                  <Button danger style={{ margin: 5 }} onPress={() => { this.clearData() }} block>
+                    <Text>BENİ UNUT</Text>
+                  </Button>
+                </Col>
+              </Grid>
+            </Form>
+          </Content>
+        </Container>
+      </ImageBackground>
     );
   }
 }
@@ -112,8 +118,12 @@ export default class Information extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null,
+  }
 });

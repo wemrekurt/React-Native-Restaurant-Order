@@ -20,7 +20,7 @@ export default class About extends React.Component {
   render() {
     return (
       <ImageBackground
-        source={require('../images/background.png')}
+        source={require('../images/background.jpg')}
         style={styles.backgroundImage}
       >
         <Grid>

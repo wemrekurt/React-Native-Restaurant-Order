@@ -26,7 +26,13 @@ import Basket from './Basket';
 export default class MenuList extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Menü',
-    headerRight:  <Button title={"Sepet"} onPress={() => {navigation.navigate('Basket')}} />
+    headerStyle: {
+      backgroundColor: 'tomato'
+    },
+    headerTitleStyle: {
+      color: 'white',
+      fontWeight: 'bold',
+    },
   });
 
   state = { data: [], loading: true };
@@ -49,9 +55,6 @@ export default class MenuList extends React.Component {
         }
       );
     });   
-  }
-  
-  UNSAFE_componentWillMount(){
   }
 
   componentDidMount(){

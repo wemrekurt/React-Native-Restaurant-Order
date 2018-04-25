@@ -4,7 +4,8 @@ import {
   View,
   Image,
   ImageBackground,
-  AsyncStorage
+  AsyncStorage,
+  TouchableOpacity
 } from 'react-native';
 import { 
   Container, 
@@ -38,55 +39,40 @@ export default class Home extends React.Component {
   render() {
     return (
       <ImageBackground
-        source={require('../images/background.png')}
+        source={require('../images/background.jpg')}
         style={styles.backgroundImage}
       >
         <Grid>
-          <Row size={35}>
+          <Row size={15}>
             <View style={styles.logo}>
               <Image source={require('../images/logo.png')} />
             </View>
-          </Row>
-          <Row size={15}>
-            <View style={styles.middleRow}>
-              <Text style={styles.middleText}> 
-                Merkez: Cumhuriyet Mah. Atatürk Bulvarı No:56 - 19 Mayıs
-              </Text><Text style={styles.middleText}> 
-                Şube: Cumhuriyet Mh. Cumhuriyet Cd. No: 25 - Bafra
-              </Text><Text style={styles.middleText}> 
-                İmalat: Cumhuriyet Mh. Cemil Engizli Sk. No: 48
-              </Text>
-            </View>
-          </Row>
-          <Row size={5}></Row>
-          <Row size={45}>
-            <View style={{ flex: 1, alignItems: 'center' }}>
+          </Row>          
+          
+          <Row size={25}>
+            <View style={{ flex: 1, marginLeft: 15 }}>
               <View>
-                <Button style={styles.button} iconLeft transparent onPress={() => {this.props.navigation.navigate('MenuList')}} >
-                  <Icon name='ios-beer' style={styles.buttonText} />
-                  <Text style={styles.buttonText}>Menü</Text>
-                </Button>
+                <TouchableOpacity onPress={() => {this.props.navigation.navigate('MenuList')}}>
+                  <Image source={require('../images/menu.png')} />
+                </TouchableOpacity>
               </View>
-              <View>
-                <Button style={styles.button} iconLeft transparent onPress={() => {this.props.navigation.navigate('Basket')}} >
-                  <Icon name='ios-basket' style={styles.buttonText} />
-                  <Text style={styles.buttonText}>Sepet</Text>
-                </Button>
+              <View style={styles.btnView}>
+                <TouchableOpacity onPress={() => {this.props.navigation.navigate('Basket')}}>
+                  <Image source={require('../images/sepet.png')} />
+                </TouchableOpacity>
               </View>
-              <View>
-                <Button style={styles.button} iconLeft transparent onPress={() => {this.props.navigation.navigate('Contact')}} >
-                  <Icon name='ios-pin' style={styles.buttonText} />
-                  <Text style={styles.buttonText}>İletişim</Text>
-                </Button>
+              <View style={styles.btnView}>
+                <TouchableOpacity onPress={() => {this.props.navigation.navigate('Contact')}}>
+                  <Image source={require('../images/iletisim.png')} />
+                </TouchableOpacity>
               </View>
-              <View>
-                <Button style={styles.button} iconLeft transparent onPress={() => {this.props.navigation.navigate('Information')}} >
-                  <Icon name='ios-pin' style={styles.buttonText} />
-                  <Text style={styles.buttonText}>Bilgilerim</Text>
-                </Button>
+              <View style={styles.btnView}>
+                <TouchableOpacity onPress={() => {this.props.navigation.navigate('Information')}}>
+                  <Image source={require('../images/bilgilerim.png')} />
+                </TouchableOpacity>
               </View>
             </View>
-          </Row>
+          </Row>         
         </Grid>
       </ImageBackground>
     );
@@ -94,16 +80,7 @@ export default class Home extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  button: { 
-    margin: 2,
-    backgroundColor: 'rgba(256, 256, 256, 0.5)',
-    padding: 5,
-    width: 140
-  },
-  buttonText: {
-    color: '#fff', 
-    fontSize: 20
-  },
+  btnView: { marginTop: 10 },
   logo: {
     flex: 1,
     alignItems: 'center', 
@@ -114,16 +91,5 @@ const styles = StyleSheet.create({
     flex: 1,
     width: null,
     height: null,
-  },
-  middleRow: { 
-    backgroundColor: 'rgba(256, 256, 256, 0.7)', 
-    flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center' 
-  },
-  middleText: { 
-    color: '#000', 
-    fontSize: 16,
-    padding: 2
   }
 });

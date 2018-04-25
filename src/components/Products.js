@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Modal,
   TextInput,
-  Alert
+  Alert,
+  ImageBackground
 } from 'react-native';
 import { 
   Container, 
@@ -34,10 +35,18 @@ import * as Progress from 'react-native-progress';
 
 export default class Products extends React.Component {
   static navigationOptions = {
-    title: 'Menü'
+    title: 'Menü',
+    headerTitle: 'Ürünler',
+    headerStyle: {
+      backgroundColor: 'tomato'
+    },
+    headerTitleStyle: {
+      color: 'white',
+      fontWeight: 'bold',
+    },
   }
 
-  state = { data: [], loading: true, category: {}, basketModal: false, tempItem: {isim: '', fotograf:'', fiyat: 0.0}, emptyItem: {isim: '', fotograf:'', fiyat: 0.0} };
+  state = { data: [], loading: true, category: {name:""}, basketModal: false, tempItem: {isim: '', fotograf:'', fiyat: 0.0}, emptyItem: {isim: '', fotograf:'', fiyat: 0.0} };
   
 
   getItems() {
@@ -66,7 +75,10 @@ export default class Products extends React.Component {
         this.saveBasket(basket, item);
       });
     }else{
-      alert("En az bir ürün eklemelisiniz!");
+      Alert.alert(
+        'Hata',
+        'En az bir ürün eklemelisiniz!'
+      );
     }
   }
 
@@ -114,48 +126,54 @@ export default class Products extends React.Component {
             onRequestClose={() => {
               this.showAddBasket(false, this.state.emptyItem);
             }}>
-            <View style={{ marginTop: 32, padding: 20 }}>
-              <View style={{flexDirection: "row", flex: 1}}>
-                <Image 
-                  indicator={Progress.Bar}
-                  source={{ uri: 'https://www.bado.com.tr/content/'+ this.state.tempItem.fotograf +'.png' }} 
-                  style={{flex: 1, width: null, height: 200}}
-                />
+            <ImageBackground
+              source={require('../images/background.jpg')}
+              style={styles.backgroundImage}
+            >
+              <View style={{ backgroundColor: 'white', marginLeft: 15, marginRight: 15, marginTop: 32, padding: 20 }}>
+                <View style={{flexDirection: "row", flex: 1}}>
+                  <Image 
+                    indicator={Progress.Bar}
+                    source={{ uri: 'https://www.bado.com.tr/content/'+ this.state.tempItem.fotograf +'.png' }} 
+                    style={{flex: 1, width: null, height: 200}}
+                  />
+                </View>
+                <View style={{ marginTop: 230 }}>
+                  <Text>{this.state.tempItem.isim} - {this.state.tempItem.fiyat} TL</Text>
+                  <TextInput
+                    style={{height: 40}}
+                    keyboardType='phone-pad'
+                    placeholder="Miktar Belirtin!"
+                    onChangeText={(text) => this.setState({text})}
+                  />
+                  <Button
+                    style={{ backgroundColor: 'tomato' }}
+                    title="Sepete Ekle"
+                    onPress={() => {
+                      this.addToBasket();
+                    }}>
+                  </Button>
+                </View>
               </View>
-              <View style={{ marginTop: 230 }}>
-                <Text>{this.state.tempItem.isim} - {this.state.tempItem.fiyat} TL</Text>
-                <TextInput
-                  style={{height: 40}}
-                  keyboardType='phone-pad'
-                  placeholder="Miktar Belirtin!"
-                  onChangeText={(text) => this.setState({text})}
-                />
-                <Button
-                  title="Sepete Ekle"
-                  onPress={() => {
-                    this.addToBasket();
-                  }}>
-                </Button>
-              </View>
-            </View>
+            </ImageBackground>
           </Modal>
           <List
             style={styles.list}
             dataArray={this.state.data}
             renderRow={(item) =>
               <ListItem>
-                <Thumbnail square size={80} source={{ uri: 'https://www.bado.com.tr/content/small/'+ item.fotograf +'-300x300.png' }} />
+                <Thumbnail size={80} source={{ uri: 'https://www.bado.com.tr/content/small/'+ item.fotograf +'-300x300.png' }} />
                 <Body>
                   <Grid>
                     <Col>
                       <Text>{item.isim}</Text>
                       <Text note>{item.fiyat} TL</Text>
                     </Col>
-                    <Col>
-                      <Btn danger block onPress={() => {
+                    <Col style={{ width: 50 }}>
+                      <Btn style={{ backgroundColor: 'tomato' }} onPress={() => {
                           this.showAddBasket(true, item);
                         }}>
-                        <Text>Sepete Ekle</Text>  
+                        <Icon name='add' /> 
                       </Btn>
                     </Col>
                   </Grid>
@@ -178,5 +196,10 @@ const styles = StyleSheet.create({
   },
   list: {
     backgroundColor: '#fff'
+  },
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null,
   }
 });
