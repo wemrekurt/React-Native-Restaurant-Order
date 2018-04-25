@@ -35,7 +35,9 @@ global.storage = storage;
 
 
 export default class Home extends React.Component {
-
+  static navigationOptions = {
+    header: null,
+  };
   render() {
     return (
       <ImageBackground

@@ -18,6 +18,7 @@ import Products from './src/components/Products';
 import About from './src/components/About';
 import Order from './src/components/Order';
 import Information from './src/components/Information';
+import Contact from './src/components/Contact';
 
 
 const MenuStack = StackNavigator({
@@ -27,13 +28,18 @@ const MenuStack = StackNavigator({
   Order: { screen: Order }
 });
 
+const HomeStack = StackNavigator({
+  Home: { screen: Home },
+  Information: { screen: Information }
+});
+
 
 export default TabNavigator(
   {
-    Anasayfa: { screen: Home },
+    Anasayfa: { screen: HomeStack },
     MenuList: { screen: MenuStack },
-    About: { screen: About },
-    Information: { screen: Information }
+    About: { screen: About },   
+    Contact: { screen: Contact }
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -46,7 +52,7 @@ export default TabNavigator(
           iconName = `ios-list${focused ? '' : '-outline'}`;
         }else if (routeName === 'About' || routeName === 'Hakkımızda') {
           iconName = `ios-information${focused ? '-circle' : ''}`;
-        }else if (routeName === 'Information') {
+        }else if (routeName === 'Contact') {
           iconName = `ios-pin${focused ? '' : '-outline'}`;
         }
 
