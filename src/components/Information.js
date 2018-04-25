@@ -32,7 +32,6 @@ export default class Information extends React.Component {
   
   componentDidMount(){
     storage.load({ key: 'info' }).then(ret => {
-      console.log(ret);
       this.setState({ phone: ret.phone, name: ret.name, address: ret.address, customer_id: ret.id });
     })
   }

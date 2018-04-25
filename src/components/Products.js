@@ -51,7 +51,6 @@ export default class Products extends React.Component {
 
   getItems() {
     let uri = 'http://api.bado.com.tr/categories/'+ this.props.navigation.state.params.cat_id + '.json';
-    console.log(uri);
     axios.get(uri)
       .then(
         response => {

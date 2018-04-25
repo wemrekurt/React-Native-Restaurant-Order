@@ -42,7 +42,6 @@ export default class Order extends React.Component {
 
   loadBasket(){
     storage.load({ key: 'basket' }).then(ret => {
-      console.log(ret);
       this.setState({ isEmpty: false, basket: ret});
       let tot = 0;
       Object.keys(ret).forEach(item => { 
@@ -56,7 +55,6 @@ export default class Order extends React.Component {
 
   loadInfo(){
     storage.load({ key: 'info' }).then(ret => {
-      console.log(ret);
       this.setState({ phone: ret.phone, name: ret.name, address: ret.address, customer_id: ret.id });
     }).catch(err => {
       console.log('User information can\'t load from storage');
@@ -146,8 +144,6 @@ export default class Order extends React.Component {
       }else{
         alert(response.data.message)
       }
-      console.log(response);
-      console.log(this.state.basket);
     });
   }
 

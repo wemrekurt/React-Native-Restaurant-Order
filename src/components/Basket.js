@@ -49,7 +49,6 @@ export default class Basket extends React.Component {
     }).catch(err => {
       this.setState({ isEmpty: true });
     });
-    console.log(this.state.basket);
   }
 
   clearBasket(){
