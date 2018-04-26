@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  View
+  View,
+  Alert
 } from 'react-native';
 import { 
   Container, 
@@ -20,6 +21,16 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationActions } from 'react-navigation';
 import axios from 'axios';
+import Realm from 'realm';
+
+const orderScheme = {
+  name: 'Orders',
+  properties: {
+    price: 'string',
+    name: 'string',
+    date: 'string'
+  }
+};
 
 export default class Order extends React.Component {
   static navigationOptions = {
@@ -72,15 +83,6 @@ export default class Order extends React.Component {
       }
     });
   }
-
-  clearData(){
-    storage.remove({
-      key: 'info'
-    }).then( ret => {
-      this.setState({phone: "", name: "", address: "", customer_id: ""});
-      alert('Verileriniz Temizlendi');
-    });
-  }
   
   clearBasket(){
     storage.remove({
@@ -131,20 +133,71 @@ export default class Order extends React.Component {
   }
 
   makeOrder(){    
-    axios({
+   axios({
       method: 'POST',
       url: 'http://api.bado.com.tr/makeorder.php',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       data: "id="+this.state.customer_id+"&phone="+this.state.phone+"&name="+this.state.name+"&address="+this.state.address+"&order="+JSON.stringify(this.state.basket)
     }).then(response => {
       if(response.data.success){
-        alert("Siparişiniz kayıt edilmiştir");
+        this.setState({ isEmpty: true })
+        Alert.alert(
+          'İşlem Tamam',
+          'Siparişiniz bize ulaştı.',
+          [
+            {text: 'Siparişi Gör', onPress: () => this.props.navigation.navigate('OldOrders')},
+            {text: 'Tamam', onPress: () => this.props.navigation.navigate('Basket')},
+          ],
+          { cancelable: false }
+        );
         this.saveUserData(response.data.data.customer_id);
+        this.saveOrderToDb(this.state.basket);
         this.clearBasket();
       }else{
         alert(response.data.message)
       }
     });
+    
+  }
+
+  saveOrderToDb(basket){
+    let names = "";
+    let price = 0;
+    Object.keys(basket).forEach(item => { 
+      names = names + ", " + basket[item].item.isim + " (" + basket[item].size + " Ad.)";
+      price += basket[item].price;
+    });
+    names = names.substr(2);
+    let d = this.formatDate(new Date());
+    Realm.open({schema: [orderScheme], schemaVersion: 1})
+    .then(realm => {
+      realm.write(() => {
+        realm.create('Orders', {
+          price: price.toString(),
+          name: names,
+          date: d.toString()
+        });
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+    
+  }
+
+  formatDate(date) {
+    var monthNames = [
+      "Ocak", "Şubat", "Mart",
+      "Nisan", "Mayıs", "Haziran", "Temmuz",
+      "Ağustos", "Eylül", "Ekim",
+      "Kasım", "Aralık"
+    ];
+  
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+  
+    return day + ' ' + monthNames[monthIndex] + ' ' + year + ' ' + date.getHours() + ':' + date.getMinutes();
   }
 
   render() {

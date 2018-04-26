@@ -45,7 +45,7 @@ export default class Home extends React.Component {
         style={styles.backgroundImage}
       >
         <Grid>
-          <Row size={15}>
+          <Row size={10}>
             <View style={styles.logo}>
               <Image source={require('../images/logo.png')} />
             </View>
@@ -71,6 +71,11 @@ export default class Home extends React.Component {
               <View style={styles.btnView}>
                 <TouchableOpacity onPress={() => {this.props.navigation.navigate('Information')}}>
                   <Image source={require('../images/bilgilerim.png')} />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.btnView}>
+                <TouchableOpacity onPress={() => {this.props.navigation.navigate('OldOrders')}}>
+                  <Image source={require('../images/siparislerim.png')} />
                 </TouchableOpacity>
               </View>
             </View>

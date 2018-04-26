@@ -25,7 +25,14 @@ import axios from 'axios';
 export default class Information extends React.Component {
   static navigationOptions = {
     headerTitle: 'Bilgilerim',
-    title: 'Anasayfa'
+    title: 'Anasayfa',
+    headerStyle: {
+      backgroundColor: 'tomato'
+    },
+    headerTitleStyle: {
+      color: 'white',
+      fontWeight: 'bold',
+    },
   }
 
   state = {isEmpty: true, basket: {}, total: 0, phone: "", name: "", address: "", customer_id: ""}

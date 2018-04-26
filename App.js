@@ -19,6 +19,8 @@ import About from './src/components/About';
 import Order from './src/components/Order';
 import Information from './src/components/Information';
 import Contact from './src/components/Contact';
+import OldOrders from './src/components/OldOrders';
+import Realm from 'realm';
 
 
 const MenuStack = StackNavigator({
@@ -30,7 +32,8 @@ const MenuStack = StackNavigator({
 
 const HomeStack = StackNavigator({
   Home: { screen: Home },
-  Information: { screen: Information }
+  Information: { screen: Information },
+  OldOrders: { screen: OldOrders }
 });
 
 

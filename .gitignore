@@ -45,6 +45,8 @@ local.properties
 android
 android/
 ios
+keystores
+keystores/
 
 # Node
 node_modules

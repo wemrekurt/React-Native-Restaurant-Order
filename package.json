@@ -20,7 +20,8 @@
     "react-native-progress": "^3.4.0",
     "react-native-storage": "^0.2.2",
     "react-native-vector-icons": "^4.6.0",
-    "react-navigation": "^1.5.11"
+    "react-navigation": "^1.5.11",
+    "realm": "^2.3.5"
   },
   "devDependencies": {
     "babel-jest": "22.4.3",
