@@ -22,3 +22,19 @@ dependencies": {
     "realm": "^2.3.5"
   }
 ```
+
+## Ekran Görüntüleri
+
+![Anasayfa](google_play/001.jpg "Anasayfa")
+![Anasayfa](google_play/002.jpg "Anasayfa")
+![Anasayfa](google_play/003.jpg "Anasayfa")
+![Anasayfa](google_play/004.jpg "Anasayfa")
+![Anasayfa](google_play/005.jpg "Anasayfa")
+![Anasayfa](google_play/006.jpg "Anasayfa")
+![Anasayfa](google_play/007.jpg "Anasayfa")
+![Anasayfa](google_play/008.jpg "Anasayfa")
+![Anasayfa](google_play/009.jpg "Anasayfa")
+![Anasayfa](google_play/010.jpg "Anasayfa")
+![Anasayfa](google_play/011.jpg "Anasayfa")
+![Anasayfa](google_play/012.jpg "Anasayfa")
+![Anasayfa](google_play/013.jpg "Anasayfa")
