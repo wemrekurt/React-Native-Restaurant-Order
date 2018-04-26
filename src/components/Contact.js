@@ -70,8 +70,8 @@ export default class Contact extends React.Component {
                 }}
                 
               >
-              {this.state.markers.map(marker => (
-                <Marker
+              {this.state.markers.map((marker, key) => (
+                <Marker key={key}
                   onPress={()=>{console.log(marker.title)}}
                   coordinate={marker.latlng}
                   title={marker.title}
